@@ -29,12 +29,18 @@
 #define ERR_DO_THE_NEEDFUL "do_the_needful blew up"
 #define DEFAULT_PROGNAME "george"
 
+struct TicTac {
+
+    
+}
+
 int do_something(int a);
 
 int main(int argc, char* argv[]){
     //Do something
     //validate inputs
     //finally
+    strMyArray = F;
     do_something(7);
     return EXIT_SUCCESS;
 }
