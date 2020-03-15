@@ -28,28 +28,64 @@
 #define ERR_FOPEN_OUTPUT "fopen(output, w)"
 #define ERR_DO_THE_NEEDFUL "do_the_needful blew up"
 #define DEFAULT_PROGNAME "george"
+#define FALSE 0;
+#define TRUE 1;
 
-struct TicTac {
-
-    
-}
-
-int do_something(int a);
+int arr_length(char* arr[]);
+int print_instructions(char* chrToPlay);
+int print_board(char** board[][]);
 
 int main(int argc, char* argv[]){
     //Do something
     //validate inputs
     //finally
-    strMyArray = F;
-    do_something(7);
+    char chrTicTacBoard[3][3] = {
+        {[0 ... 2] = ' '},
+        {[0 ... 2] = ' '},
+        {[0 ... 2] = ' '}
+    };
+
+    printf("test\n");
+    print_board(chrTicTacBoard);
+
     return EXIT_SUCCESS;
 }
 
-int do_something(int a){
-    //do something
+int arr_length(char* arr[]){
     return EXIT_SUCCESS;
 }
 
+int print_instructions(char* chrToPlay){
+    printf("Please give coordinates to play your piece in x,y format.\n");
+    printf("x and y are indexed from 0. E.G.: $ 0,2 or $ 1,1.\n");
+    printf("%c to play $ ",chrToPlay);
+    return EXIT_SUCCESS;
+}
 
+int print_board(char** board[][]){
+    return EXIT_SUCCESS;
+}
+/*
+char has_won(char arr[][]){
+    char chrReturnVal = ' ';
+
+    //Check verticals
+    for (int i = 0; i < 3 && !blnReturnVar; ++i){
+
+        if (arr[i][0] == *arr[i][0] == *arr[i][0]){
+            blnReturnVar = TRUE;
+            
+        }
+    }
+
+//    statement ? true : false
+
+    //Check horizontals
+
+    //Check the two diagonals
+
+    return chrReturnVal;
+}
+*/
 
 
