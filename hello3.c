@@ -22,47 +22,89 @@
 #include <unistd.h>
 #include <errno.h>
 
+/*
 #define OPTSTR "vi:o:f:h"
 #define USAGE_FMT "%s [-v] [-f hexflag] [-i inputfile] [-o outputfile] [-h]"
 #define ERR_FOPEN_INPUT "fopen(input, r)"
 #define ERR_FOPEN_OUTPUT "fopen(output, w)"
 #define ERR_DO_THE_NEEDFUL "do_the_needful blew up"
 #define DEFAULT_PROGNAME "george"
+*/
 #define FALSE 0;
 #define TRUE 1;
 
-int arr_length(char* arr[]);
-int print_instructions(char* chrToPlay);
-int print_board(char** board[][]);
+size_t arr_length(char *arr);
+int print_instructions(char chrToPlay);
+int print_board(char **boardTwoStar, char board, char *boardOneStar[]);
 
 int main(int argc, char* argv[]){
     //Do something
     //validate inputs
     //finally
     char chrTicTacBoard[3][3] = {
-        {[0 ... 2] = ' '},
-        {[0 ... 2] = ' '},
-        {[0 ... 2] = ' '}
+        {[0 ... 2] = '#'},
+        {[0 ... 2] = '\''},
+        {[0 ... 2] = '2'}
     };
 
     printf("test\n");
-    print_board(chrTicTacBoard);
+    printf("%c\n",chrTicTacBoard);
+    printf("%d total cells\n", sizeof(chrTicTacBoard));
+    printf("%d height\n", sizeof(chrTicTacBoard[0]));
+    printf("%d width\n", sizeof(chrTicTacBoard)/sizeof(chrTicTacBoard[0]));
+    print_board(*chrTicTacBoard);
 
     return EXIT_SUCCESS;
 }
 
-int arr_length(char* arr[]){
-    return EXIT_SUCCESS;
-}
-
-int print_instructions(char* chrToPlay){
+int print_instructions(char chrToPlay){
     printf("Please give coordinates to play your piece in x,y format.\n");
     printf("x and y are indexed from 0. E.G.: $ 0,2 or $ 1,1.\n");
-    printf("%c to play $ ",chrToPlay);
+    printf("%c to play $ ", chrToPlay);
     return EXIT_SUCCESS;
 }
 
-int print_board(char** board[][]){
+int print_board(char **boardTwoStar, char board, char *boardOneStar[]){
+
+    printf("After passing char **boardTwoStar:\n");
+    printf("%d sizeof(boardTwoStar)\n", sizeof(boardTwoStar));
+    printf("%d sizeof(boardTwoStar)\n",sizeof(boardTwoStar));
+    printf("%d sizeof(boardTwoStar[0])\n",sizeof(boardTwoStar[0]));
+    printf("%d sizeof(&boardTwoStar)\n",sizeof(&boardTwoStar));
+    printf("%d sizeof(&boardTwoStar[0])\n",sizeof(&boardTwoStar[0]));
+    
+    printf("###\n");
+    
+    printf("After passing char board:\n");
+    printf("%d sizeof(board)\n", sizeof(board));
+    printf("%d sizeof(board)\n",sizeof(board));
+    printf("%d sizeof(board[0])\n",sizeof(board[0]));
+    printf("%d sizeof(&board)\n",sizeof(&board));
+    printf("%d sizeof(&board[0])\n",sizeof(&board[0]));
+
+    printf("###\n");
+
+    printf("After passing char *boardOneStar:\n");
+    printf("%d sizeof(boardOneStar)\n", sizeof(boardOneStar));
+    printf("%d sizeof(boardOneStar)\n",sizeof(boardOneStar));
+    printf("%d sizeof(boardOneStar[0])\n",sizeof(boardOneStar[0]));
+    printf("%d sizeof(&boardOneStar)\n",sizeof(&boardOneStar));
+    printf("%d sizeof(&boardOneStar[0])\n",sizeof(&boardOneStar[0]));
+
+    printf("###\n");    
+/*
+    int intDimY = sizeof(boardTwoStar[0]);
+    int intDimX = sizeof(boardTwoStar)/intDimY;
+
+    for (int j = 0; j < intDimX; ++j){
+        for (int i = 0; i < intDimY; ++i){
+            printf("%c", &boardTwoStar[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+*/
+
     return EXIT_SUCCESS;
 }
 /*
