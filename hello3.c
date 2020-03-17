@@ -41,18 +41,28 @@ int main(int argc, char* argv[]){
     //Do something
     //validate inputs
     //finally
+    
+    char winner = ' ';
+    char p1 = '+';
+    char p2 = '0';
+    char player = ' ';
+    int intW = 3;
+    int intH = 3;
+    int intMaxPlays = intW * intH;
+
     char chrTicTacBoard[3][3] = {
-        {[0 ... 2] = '#'},
-        {[0 ... 2] = '\''},
-        {[0 ... 2] = '2'}
+        {[0 ... 2] = ' '},
+        {[0 ... 2] = ' '},
+        {[0 ... 2] = ' '}
     };
 
-    printf("test\n");
-    printf("%c\n",chrTicTacBoard);
-    printf("%d total cells\n", sizeof(chrTicTacBoard));
-    printf("%d height\n", sizeof(chrTicTacBoard[0]));
-    printf("%d width\n", sizeof(chrTicTacBoard)/sizeof(chrTicTacBoard[0]));
-    print_board(*chrTicTacBoard);
+
+    do {
+        print_board2(intW, intH, &chrTicTacBoard);
+        player = (player == p2) ? p1 : p2;
+        print_instructions(player);
+        winner = get_winner(intW, intH, &chrTicTacBoard)
+    } while (winner == ' ');
 
     return EXIT_SUCCESS;
 }
@@ -64,7 +74,34 @@ int print_instructions(char chrToPlay){
     return EXIT_SUCCESS;
 }
 
+int print_board2(int intW, int intH, char board[intW][intH]){
+    char f;
+    char delim = '|';
+    printf("    ");
+    for (int j = 0; j < intW; ++j){
+        printf("%d   ", j);
+    }
+    printf("\n");
+    for (int j = 0; j < intW; ++j){
+        printf("%d %c ", j, delim);
+        for (int i = 0; i < intH; ++i){
+            f = board[i][j];
+            printf("%c %c ", board[i][j], delim);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+int get_winner(int intW, int intH, char board[intW][intH]){
+
+
+    
+}
+
 int print_board(char **boardTwoStar, char board, char *boardOneStar[]){
+
+    printf("print_board(chrTicTacBoard, chrTicTacBoard, chrTicTacBoard);\n\n");
 
     printf("After passing char **boardTwoStar:\n");
     printf("%d sizeof(boardTwoStar)\n", sizeof(boardTwoStar));
@@ -78,9 +115,9 @@ int print_board(char **boardTwoStar, char board, char *boardOneStar[]){
     printf("After passing char board:\n");
     printf("%d sizeof(board)\n", sizeof(board));
     printf("%d sizeof(board)\n",sizeof(board));
-    printf("%d sizeof(board[0])\n",sizeof(board[0]));
+    //printf("%d sizeof(board[0])\n",sizeof(board[0]));
     printf("%d sizeof(&board)\n",sizeof(&board));
-    printf("%d sizeof(&board[0])\n",sizeof(&board[0]));
+    //printf("%d sizeof(&board[0])\n",sizeof(&board[0]));
 
     printf("###\n");
 
