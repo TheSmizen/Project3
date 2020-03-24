@@ -56,12 +56,20 @@ int main(int argc, char* argv[]){
         {[0 ... 2] = ' '}
     };
 
-
+    int blnInputValid;
+    int x;
+    int y;
+    player = p1;
+    //Main loop
     do {
         print_board2(intW, intH, &chrTicTacBoard);
-        player = (player == p2) ? p1 : p2;
         print_instructions(player);
-        winner = get_winner(intW, intH, &chrTicTacBoard)
+
+        blnInputValid = get_and_validate_input(&x, &y);   //Pass pointers for return val
+        if (blnInputValid){
+            winner = get_winner(intW, intH, &chrTicTacBoard);
+            player = (player == p2) ? p1 : p2;
+        }
     } while (winner == ' ');
 
     return EXIT_SUCCESS;
@@ -77,7 +85,7 @@ int print_instructions(char chrToPlay){
 int print_board2(int intW, int intH, char board[intW][intH]){
     char f;
     char delim = '|';
-    printf("    ");
+    printf("    ");                 //Space for the row coords
     for (int j = 0; j < intW; ++j){
         printf("%d   ", j);
     }
@@ -93,78 +101,39 @@ int print_board2(int intW, int intH, char board[intW][intH]){
     printf("\n");
 }
 
-int get_winner(int intW, int intH, char board[intW][intH]){
-
-
-    
-}
-
-int print_board(char **boardTwoStar, char board, char *boardOneStar[]){
-
-    printf("print_board(chrTicTacBoard, chrTicTacBoard, chrTicTacBoard);\n\n");
-
-    printf("After passing char **boardTwoStar:\n");
-    printf("%d sizeof(boardTwoStar)\n", sizeof(boardTwoStar));
-    printf("%d sizeof(boardTwoStar)\n",sizeof(boardTwoStar));
-    printf("%d sizeof(boardTwoStar[0])\n",sizeof(boardTwoStar[0]));
-    printf("%d sizeof(&boardTwoStar)\n",sizeof(&boardTwoStar));
-    printf("%d sizeof(&boardTwoStar[0])\n",sizeof(&boardTwoStar[0]));
-    
-    printf("###\n");
-    
-    printf("After passing char board:\n");
-    printf("%d sizeof(board)\n", sizeof(board));
-    printf("%d sizeof(board)\n",sizeof(board));
-    //printf("%d sizeof(board[0])\n",sizeof(board[0]));
-    printf("%d sizeof(&board)\n",sizeof(&board));
-    //printf("%d sizeof(&board[0])\n",sizeof(&board[0]));
-
-    printf("###\n");
-
-    printf("After passing char *boardOneStar:\n");
-    printf("%d sizeof(boardOneStar)\n", sizeof(boardOneStar));
-    printf("%d sizeof(boardOneStar)\n",sizeof(boardOneStar));
-    printf("%d sizeof(boardOneStar[0])\n",sizeof(boardOneStar[0]));
-    printf("%d sizeof(&boardOneStar)\n",sizeof(&boardOneStar));
-    printf("%d sizeof(&boardOneStar[0])\n",sizeof(&boardOneStar[0]));
-
-    printf("###\n");    
-/*
-    int intDimY = sizeof(boardTwoStar[0]);
-    int intDimX = sizeof(boardTwoStar)/intDimY;
-
-    for (int j = 0; j < intDimX; ++j){
-        for (int i = 0; i < intDimY; ++i){
-            printf("%c", &boardTwoStar[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-*/
+int get_and_validate_input(int* x, int* y){
+    int returnVal = EXIT_SUCCESS;
 
     return EXIT_SUCCESS;
 }
-/*
-char has_won(char arr[][]){
-    char chrReturnVal = ' ';
 
-    //Check verticals
-    for (int i = 0; i < 3 && !blnReturnVar; ++i){
+//TODO make this work for XxY sized boards
+char get_winner(int intW, int intH, char board[intW][intH]){
+    char winner = ' ';
 
-        if (arr[i][0] == *arr[i][0] == *arr[i][0]){
-            blnReturnVar = TRUE;
-            
+    for (int i = 0; i < intW && (winner == ' '); ++i){
+        //Check verticals
+        if (board[i][0] == board[i][1] == board[i][2]){
+            winner = board[i][0];
         }
+        //Check horizontals
+        if (board[0][i] == board[0][i] == board[0][i]){
+            winner = board[i][0];
+        }
+        //Check diagonals x2
+        if (board[0][i] == board[0][i] == board[0][i]){
+            winner = board[i][0];
+        }
+    
     }
 
-//    statement ? true : false
+    if (board[0][0] == board[1][1] == board [2,2]){
+        winner = board[0][0];
+    }
 
-    //Check horizontals
+    if (board[0][2] == board [1][1] == board [2][0]){
+        winner = board[0][0];
+    }
 
-    //Check the two diagonals
-
-    return chrReturnVal;
+    return winner;
 }
-*/
-
-
