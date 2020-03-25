@@ -33,15 +33,16 @@
 #define FALSE 0;
 #define TRUE 1;
 
-size_t arr_length(char *arr);
+int main(int argc, char* argv[]);
 int print_instructions(char chrToPlay);
-int print_board(char **boardTwoStar, char board, char *boardOneStar[]);
+char get_winner(int intW, int intH, char board[intW][intH]);
+int print_board2(int intW, int intH, char board[intW][intH]);
+int get_and_validate_input(int* x, int* y, int intXUBound, int intYUBound);
+int clear_screen();
 
 int main(int argc, char* argv[]){
     //Do something
     //validate inputs
-    //finally
-    
     char winner = ' ';
     char p1 = '+';
     char p2 = '0';
@@ -49,7 +50,8 @@ int main(int argc, char* argv[]){
     int intW = 3;
     int intH = 3;
     int intMaxPlays = intW * intH;
-
+    int intPlayCounter = 0;
+    //TODO make work for N width
     char chrTicTacBoard[3][3] = {
         {[0 ... 2] = ' '},
         {[0 ... 2] = ' '},
@@ -62,23 +64,45 @@ int main(int argc, char* argv[]){
     player = p1;
     //Main loop
     do {
+        clear_screen();
         print_board2(intW, intH, &chrTicTacBoard);
         print_instructions(player);
-
-        blnInputValid = get_and_validate_input(&x, &y);   //Pass pointers for return val
+        blnInputValid = get_and_validate_input(&x, &y, intW, intH) + 1;   //Pass pointers for return val
+        clear_screen();
         if (blnInputValid){
-            winner = get_winner(intW, intH, &chrTicTacBoard);
-            player = (player == p2) ? p1 : p2;
+            if(chrTicTacBoard[x][y] == ' '){
+                chrTicTacBoard[x][y] = player;            
+                winner = get_winner(intW, intH, &chrTicTacBoard);
+                player = (player == p2) ? p1 : p2;
+                ++intPlayCounter;
+            } else {
+                printf("\nThat was an invalid play.\n");
+            }
         }
-    } while (winner == ' ');
-
+    } while (winner == ' ' && intPlayCounter < intMaxPlays);
+    print_board2(intW, intH, &chrTicTacBoard);
+    printf("\n\nThe Winner is: ");
+    printf("%c\n", winner);
     return EXIT_SUCCESS;
 }
 
+int clear_screen(){
+    printf("\n\n\n\n\n");
+}
+
+int get_and_validate_input(int* x, int* y, int intXUBound, int intYUBound){
+    scanf("%d,%d", x, y);
+    int intReturnCode = EXIT_FAILURE;
+    if ((0 <= x < intXUBound ) && (0 <= y < intYUBound)){
+        intReturnCode = EXIT_SUCCESS;
+    }
+    return intReturnCode;
+}
+
 int print_instructions(char chrToPlay){
-    printf("Please give coordinates to play your piece in x,y format.\n");
-    printf("x and y are indexed from 0. E.G.: $ 0,2 or $ 1,1.\n");
-    printf("%c to play $ ", chrToPlay);
+    printf("Please give coordinates to play your piece in \"x y\" format.\n");
+    printf("x and y are indexed from 0. E.G.: $ 0 2 or $ 1 1.\n");
+    printf("%c to play: $", chrToPlay);
     return EXIT_SUCCESS;
 }
 
@@ -101,39 +125,50 @@ int print_board2(int intW, int intH, char board[intW][intH]){
     printf("\n");
 }
 
-int get_and_validate_input(int* x, int* y){
-    int returnVal = EXIT_SUCCESS;
-
-    return EXIT_SUCCESS;
-}
-
-//TODO make this work for XxY sized boards
 char get_winner(int intW, int intH, char board[intW][intH]){
     char winner = ' ';
-
+    char diagonalTopBottom = board[0][0];
+    char diagonalBottomTop = board[intH-1][0];
+    char vertical = board[0][0];
+    char horizontal = board[0][0];
     for (int i = 0; i < intW && (winner == ' '); ++i){
+        vertical = board[i][0];
+        horizontal = board[0][i];
         //Check verticals
-        if (board[i][0] == board[i][1] == board[i][2]){
-            winner = board[i][0];
+        for (int j = 0; j < intH; j++){
+            if (board[i][j] != vertical){
+                vertical = ' ';
+            }
         }
         //Check horizontals
-        if (board[0][i] == board[0][i] == board[0][i]){
-            winner = board[i][0];
+        for (int j = 0; j < intH; j++){
+            if (board[j][i] != horizontal){
+                horizontal = ' ';
+            }
         }
-        //Check diagonals x2
-        if (board[0][i] == board[0][i] == board[0][i]){
-            winner = board[i][0];
+        //Check diagonals Top to Bottom (Left to Right)
+        if (board[i][i] != diagonalTopBottom){
+            diagonalTopBottom = ' ';
         }
-    
-    }
+        //Check diagonals Bottom to Top (Left to Right)
+        if (board[intH-(i+1)][i] != diagonalTopBottom){
+            diagonalBottomTop = ' ';
+        }
 
-    if (board[0][0] == board[1][1] == board [2,2]){
-        winner = board[0][0];
+        //End of loop - check for winners on Vertical/Horizontal
+        //Vertical / Horizontal:
+        if (vertical != ' '){
+            winner = vertical;
+        }else if (horizontal != ' '){
+            winner = horizontal;
+        }
     }
-
-    if (board[0][2] == board [1][1] == board [2][0]){
-        winner = board[0][0];
+    //Check Diagonals only after loop:
+    if (diagonalTopBottom != ' '){
+        winner = diagonalTopBottom;
+    } 
+    if (diagonalBottomTop != ' '){
+        winner = diagonalBottomTop;
     }
-
     return winner;
 }
